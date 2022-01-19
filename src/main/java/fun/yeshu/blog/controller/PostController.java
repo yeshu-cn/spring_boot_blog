@@ -25,7 +25,6 @@ import fun.yeshu.blog.service.PostService;
 import fun.yeshu.blog.utils.AppConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
 
 @Api(value = "CRUD REST APIs for Post resources")
 @RestController

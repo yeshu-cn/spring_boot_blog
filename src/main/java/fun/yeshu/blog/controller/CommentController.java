@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fun.yeshu.blog.payload.CommentDto;
 import fun.yeshu.blog.service.CommentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "CRUD REST APIs for Comment Resources")
 @RestController
 @RequestMapping("/api/v1")
 public class CommentController {
@@ -25,6 +28,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    @ApiOperation(value = "Create comment REST API")
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<CommentDto> createComment(@PathVariable(value = "postId") long postId,
             @Valid @RequestBody CommentDto commentDto) {
@@ -32,17 +36,20 @@ public class CommentController {
                 HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Get comment by post id REST API")
     @GetMapping("/posts/{postId}/comments")
     public List<CommentDto> getCommentsByPostId(@PathVariable(value = "postId") long postId) {
         return commentService.getCommentsByPostId(postId);
     }
 
+    @ApiOperation(value = "Get single comment by comment id REST API")
     @GetMapping("/posts/{postId}/comments/{id}")
     public ResponseEntity<CommentDto> getCommentById(@PathVariable(value = "postId") long postId,
             @PathVariable(value = "id") long commentId) {
         return ResponseEntity.ok(commentService.getCommentById(postId, commentId));
     }
 
+    @ApiOperation(value = "Update comment REST API")
     @PutMapping("/posts/{postId}/comments/{id}")
     public ResponseEntity<CommentDto> updateComment(@PathVariable(value = "postId") long postId,
             @PathVariable(value = "id") long commentId, @Valid @RequestBody CommentDto commentDto) {
@@ -50,6 +57,7 @@ public class CommentController {
         return ResponseEntity.ok(updatedComment);
     }
 
+    @ApiOperation(value = "Delete comment REST API")
     @DeleteMapping("/posts/{postId}/comments/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(value = "postId") long postId,
             @PathVariable(name = "id") long commentId) {

@@ -23,7 +23,11 @@ import fun.yeshu.blog.payload.PostDtoV2;
 import fun.yeshu.blog.payload.PostResponse;
 import fun.yeshu.blog.service.PostService;
 import fun.yeshu.blog.utils.AppConstants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 
+@Api(value = "CRUD REST APIs for Post resources")
 @RestController
 @RequestMapping
 public class PostController {
@@ -34,6 +38,7 @@ public class PostController {
         this.postService = postService;
     }
 
+    @ApiOperation(value = "Create Post REST API")
     // create post
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("api/v1/posts")
@@ -42,6 +47,7 @@ public class PostController {
     }
 
     // get all post
+    @ApiOperation(value = "Get all post REST API")
     @GetMapping("api/v1/posts")
     public ResponseEntity<PostResponse> getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,
@@ -56,6 +62,7 @@ public class PostController {
     }
 
     @GetMapping("api/v1/posts/{id}")
+    @ApiOperation(value = "Get post by id REST API")
     public ResponseEntity<PostDto> getPostByIdV1(@PathVariable(name = "id") long id) {
         return ResponseEntity.ok(postService.getPostById(id));
     }
@@ -78,6 +85,7 @@ public class PostController {
     }
 
     // update post
+    @ApiOperation(value = "Update Post REST API")
     @PutMapping("api/v1/posts/{id}")
     public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto,
             @PathVariable(name = "id") long id) {
@@ -85,6 +93,7 @@ public class PostController {
     }
 
     // delete post
+    @ApiOperation(value = "Delete Post REST API")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("api/v1/posts/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") long id) {

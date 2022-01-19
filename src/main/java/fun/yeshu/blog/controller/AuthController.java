@@ -23,7 +23,10 @@ import fun.yeshu.blog.payload.SignUpDto;
 import fun.yeshu.blog.repository.RoleRepository;
 import fun.yeshu.blog.repository.UserRepository;
 import fun.yeshu.blog.security.JwtTokenProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "Auth controller expose login and register")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -43,6 +46,7 @@ public class AuthController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    @ApiOperation(value = "REST API to register or Signup user to Bolg app")
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
@@ -56,6 +60,7 @@ public class AuthController {
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
+    @ApiOperation(value = "REST API to Signin or Login user to Bolg app")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto) {
         if (userRepository.existsByUsername(signUpDto.getUsername())) {
